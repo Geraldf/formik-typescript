@@ -1,12 +1,11 @@
 import React from "react";
 // import styled from "styled-components";
 import styled from "@mui/styled-engine";
-import TestForm from './components/Forms/TestForm/TestForm';
+import TestForm from "./components/Forms/TestForm/TestForm";
 import Signup from "./components/Forms/TestForm/signup";
-
-
-
-
+import { StyledApp } from "./components/Forms/styles";
+import Form1 from "./components/Forms/Form1";
+import WithMaterialUI from "./components/Form2/f2";
 
 const Container = styled("div")({
   margin: "0 auto",
@@ -22,12 +21,9 @@ const Container = styled("div")({
 function App(): React.ReactElement {
   return (
     <Container>
-      <Signup/>
-      <TestForm />
-      {/* <SimpleProjectForm />
-      <SimpleProjectFormStyled />
-      <NestedProjectForm />
-      <FormWithFormikContext /> */}
+      <StyledApp>
+        <WithMaterialUI />
+      </StyledApp>
     </Container>
   );
 }

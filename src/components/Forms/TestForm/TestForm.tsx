@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, FormEvent } from "react";
 import { styled } from "@mui/system";
 import {
   Formik,
@@ -17,6 +17,7 @@ interface CustomInputComponent {
   id?: string;
   value?: any;
 }
+
 const onSubmit = (values: Values, props: any) => {
   console.log(values);
   console.log(props);
@@ -36,11 +37,21 @@ const MyComponent = styled(MTF)({
   padding: 8,
   borderRadius: 4,
 });
+
 const TestForm = () => {
   const paperStyle = { padding: 20, width: 300, margin: "0 auto" };
   const [formValues, setFormValues] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const onChange = (event: FormEvent) => {
+    // s
+    // setFormValues(prevValues => ({
+    //   ...prevValues,
+    //   // we use the name to tell Formik which key of `values` to update
+    //   [event.target.id]: event.target.value
+    // });
+    console.log("Form1::onChange", event);
+  };
   return (
     <Grid>
       <Paper style={paperStyle}>
@@ -49,19 +60,23 @@ const TestForm = () => {
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {({ values, handleChange, errors, touched }) => (
-            <FormikForm>
+          {({
+            values,
+
+            errors,
+            touched,
+            handleBlur,
+            handleSubmit,
+          }) => (
+            <FormikForm onChange={onChange}>
               {Object.keys(values).map((key, index, all) => {
                 return (
                   <Field
                     component={MyComponent}
                     placeholder={key}
-                    id={index}
+                    id={key}
                     value={values[key as keyof typeof values]}
-                    onChange={handleChange}
-                    // onBlur={handleBlur}
                     key={index}
-                    testProp="sdfs"
                     name={key}
                     label={key}
                     fullWidth
