@@ -9,7 +9,7 @@ import WithMaterialUI from "./components/Form2/f2";
 
 const Container = styled("div")({
   margin: "0 auto",
-  width: "40%",
+  width: "90%",
   padding: "20px",
 
   // eslint-disable-next-line no-useless-computed-key

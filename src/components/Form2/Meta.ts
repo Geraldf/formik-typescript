@@ -1,5 +1,6 @@
+import { ReactElement } from "react";
 import { object, string, number, date, boolean } from "yup";
-//import { Values } from "../../../Interfaces";
+import { type_formdef } from "./types";
 
 export interface Values {
   firstName: string;
@@ -18,7 +19,6 @@ export interface Values {
   onOffSwitch: boolean;
   termsOfService: boolean;
 }
-
 export const initialFormState: Values = {
   firstName: "Vorname",
   lastName: "",
@@ -37,6 +37,9 @@ export const initialFormState: Values = {
   termsOfService: false,
 };
 
+// validationSchema
+// Only used in Native, not in New-MUI -->
+// No min/max needed in validationSchema either
 const minDate = new Date();
 minDate.setDate(minDate.getDate() - 1);
 const maxDate = new Date();
@@ -75,50 +78,65 @@ export const validationSchema = object().shape({
     .required("The terms and conditions must be accepted."),
 });
 
-export const formdef = {
+export const formdef: type_formdef = {
   firstName: {
-    width: 2,
+    width: 1,
+    muiComponent: "TextField",
   },
   lastName: {
-    width: 2,
+    width: 1,
+    muiComponent: "TextField",
   },
   email: {
-    width: 2,
+    width: 1,
+    muiComponent: "TextField",
   },
   phone: {
-    width: 2,
+    width: 1,
+    muiComponent: "TextField",
   },
   age: {
     width: 2,
+    muiComponent: "TextField",
   },
   addressLine1: {
     width: 2,
+    muiComponent: "TextField",
   },
   addressLine2: {
     width: 2,
+    muiComponent: "TextField",
   },
   city: {
     width: 2,
+    muiComponent: "TextField",
   },
   state: {
     width: 2,
+    muiComponent: "TextField",
   },
   country: {
     width: 2,
+    muiComponent: "TextField",
   },
   arrivalDate: {
     width: 2,
+    muiComponent: "TextField",
   },
   departureDate: {
     width: 2,
+    muiComponent: "TextField",
   },
   message: {
     width: 2,
+    muiComponent: "TextField",
   },
   onOffSwitch: {
     width: 1,
+    muiComponent: "TextField",
   },
   termsOfService: {
     width: 1,
+    muiComponent: "TextField",
   },
 };
