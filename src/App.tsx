@@ -1,10 +1,7 @@
 import React from "react";
 // import styled from "styled-components";
 import styled from "@mui/styled-engine";
-import TestForm from "./components/Forms/TestForm/TestForm";
-import Signup from "./components/Forms/TestForm/signup";
-import { StyledApp } from "./components/Forms/styles";
-import Form1 from "./components/Forms/Form1";
+import { StyledApp } from "./components/utils/styles";
 import WithMaterialUI from "./components/Form2/f2";
 
 const Container = styled("div")({

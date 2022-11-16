@@ -1,38 +1,17 @@
 import { useFormik } from "formik";
-import * as yup from "yup";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import { styled } from "@mui/material/styles";
 import * as fld from "./Meta";
 import Grid from "@mui/material/Grid";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import { Checkbox } from "@mui/material";
+import { CustomTextfield } from "../utils/CustomTextfield";
+import { MaskedOne } from "../MaskedInput/MaskedOne";
 
-// export const validationSchema = yup.object({
-//   email: yup
-//     .string()
-//     .email("Enter a valid email")
-//     .required("Email is required"),
-//   password: yup
-//     .string()
-//     .min(8, "Password should be of minimum 8 characters length")
-//     .required("Password is required"),
-// });
-
-const CustomTextfield = styled(TextField)({
-  // your custom styles go here
-  padding: "5px",
-}) as typeof TextField;
-
-const WithMaterialUI = () => {
+const WithMaterialUI = (props: any) => {
   const formik = useFormik({
     initialValues: fld.initialFormState,
-    // initialValues: {
-    //   email: "foobar@example.com",
-    //   password: "foobar",
-    // },
+
     validationSchema: fld.validationSchema,
     validateOnChange: true,
     validateOnBlur: true,
@@ -46,52 +25,112 @@ const WithMaterialUI = () => {
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2}>
           {Object.keys(fld.initialFormState).map((key, index, allKeys) => {
-            if (
-              typeof formik.values[key as keyof typeof formik.values] ===
-              "string"
-            ) {
-              return (
-                <Grid
-                  item
-                  xs={fld.formdef[key as keyof typeof fld.formdef].width}
-                >
-                  <CustomTextfield
-                    fullWidth
-                    id={key}
-                    name={key}
-                    label={key}
-                    value={formik.values[key as keyof typeof formik.values]}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={
-                      formik.touched[key as keyof typeof formik.values] &&
-                      Boolean(formik.errors[key as keyof typeof formik.values])
-                    }
-                    helperText={
-                      formik.touched[key as keyof typeof formik.values] &&
-                      formik.errors[key as keyof typeof formik.values]
-                    }
-                  />
-                </Grid>
-              );
-            } else if (
-              typeof formik.values[key as keyof typeof formik.values] ===
-              "boolean"
-            ) {
-              const b: boolean = Boolean(
-                formik.values[key as keyof typeof formik.values]
-              );
-              return (
-                <FormGroup>
-                  <FormControlLabel
-                    name={key}
-                    control={
-                      <Switch checked={b} onChange={formik.handleChange} />
-                    }
-                    label={key}
-                  />
-                </FormGroup>
-              );
+            switch (fld.formdef[key as keyof typeof fld.formdef].muiComponent) {
+              case "TextField":
+                return (
+                  <Grid
+                    item
+                    xs={fld.formdef[key as keyof typeof fld.formdef].width}
+                  >
+                    <CustomTextfield
+                      fullWidth
+                      variant="standard"
+                      id={key}
+                      name={key}
+                      label={key}
+                      value={formik.values[key as keyof typeof formik.values]}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched[key as keyof typeof formik.values] &&
+                        Boolean(
+                          formik.errors[key as keyof typeof formik.values]
+                        )
+                      }
+                      helperText={
+                        formik.touched[key as keyof typeof formik.values] &&
+                        formik.errors[key as keyof typeof formik.values]
+                      }
+                    />
+                  </Grid>
+                );
+
+              case "Switch":
+                return (
+                  <Grid
+                    item
+                    xs={fld.formdef[key as keyof typeof fld.formdef].width}
+                  >
+                    <FormGroup>
+                      <FormControlLabel
+                        name={key}
+                        control={
+                          <Switch
+                            checked={Boolean(
+                              formik.values[key as keyof typeof formik.values]
+                            )}
+                            onChange={formik.handleChange}
+                          />
+                        }
+                        label={key}
+                      />
+                    </FormGroup>
+                  </Grid>
+                );
+              case "Masked":
+                return (
+                  <Grid
+                    item
+                    xs={fld.formdef[key as keyof typeof fld.formdef].width}
+                  >
+                    <MaskedOne
+                      label={key}
+                      value={
+                        formik.values[
+                          key as keyof typeof formik.values
+                        ] as string
+                      }
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched[key as keyof typeof formik.values] &&
+                        Boolean(
+                          formik.errors[key as keyof typeof formik.values]
+                        )
+                      }
+                      id={key}
+                      helperText={
+                        formik.touched[key as keyof typeof formik.values] &&
+                        formik.errors[key as keyof typeof formik.values]
+                      }
+                    ></MaskedOne>
+                    {/* <MaskedInput
+                      variant="standard"
+                      mask="___"
+                      showMask={true}
+                      replacement={{ _: /\d/ }}
+                      label={key}
+                      value={
+                        formik.values[
+                          key as keyof typeof formik.values
+                        ] as string
+                      }
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched[key as keyof typeof formik.values] &&
+                        Boolean(
+                          formik.errors[key as keyof typeof formik.values]
+                        )
+                      }
+                      id={key}
+                      helperText={
+                        formik.touched[key as keyof typeof formik.values] &&
+                        formik.errors[key as keyof typeof formik.values]
+                      }
+                    /> */}
+                  </Grid>
+                );
             }
           })}
         </Grid>

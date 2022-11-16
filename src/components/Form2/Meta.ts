@@ -7,7 +7,7 @@ export interface Values {
   lastName: string;
   email: string;
   phone: string;
-  age: number;
+  age: string;
   addressLine1: string;
   addressLine2: string;
   city: string;
@@ -24,7 +24,7 @@ export const initialFormState: Values = {
   lastName: "",
   email: "",
   phone: "",
-  age: 21,
+  age: "",
   addressLine1: "",
   addressLine2: "",
   city: "",
@@ -49,10 +49,13 @@ export const validationSchema = object().shape({
   firstName: string().required("First name Required"),
   lastName: string().required("Last name Required"),
   email: string().email("Invalid email").required("Email required"),
-  age: number()
-    .positive("The age has to be postive")
-    .integer("The number must be an integer")
+  age: string()
+    .matches(
+      /^(?:(?!_).)*$/,
+      "Field must be filled completly (no '_' must be left"
+    )
     .required("Phone number required"),
+
   phone: number()
     .positive("The number must be positive")
     .integer("The number must be an integer")
@@ -97,7 +100,7 @@ export const formdef: type_formdef = {
   },
   age: {
     width: 2,
-    muiComponent: "TextField",
+    muiComponent: "Masked",
   },
   addressLine1: {
     width: 2,
@@ -132,11 +135,11 @@ export const formdef: type_formdef = {
     muiComponent: "TextField",
   },
   onOffSwitch: {
-    width: 1,
-    muiComponent: "TextField",
+    width: 3,
+    muiComponent: "Switch",
   },
   termsOfService: {
-    width: 1,
-    muiComponent: "TextField",
+    width: 3,
+    muiComponent: "Switch",
   },
 };
